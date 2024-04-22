@@ -32,4 +32,20 @@ export default class NoteController {
             })
         }
     }
+
+    static async getAllUserNotes(req, res){
+        try {
+            const token = getToken(req)
+            const user = await getUserByToken(token)
+
+            const notes = await Note.findAll({where: {UserId: user.id}})
+
+            res.status(200).json({notes})
+
+        } catch (error) {
+            res.status(500).json({ 
+                message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" 
+            })
+        }
+    }
 }
