@@ -3,9 +3,18 @@ import getToken from "../helpers/get-token.js";
 import getUserByToken from "../helpers/get-user-by-token.js";
 
 import bcrypt from "bcrypt"
-
-
 export default class UserController {
+
+    static async checkUser(req, res){
+        try {
+            const token = getToken(req)
+            const currentUser = await getUserByToken(token)
+
+            res.status(200).json({user: currentUser})
+        } catch (error) {
+            res.status(500).json({ message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" })
+        }
+    }
 
     static async updateUser(req, res){
         const {name, email, password, confirmpassword} = req.body
