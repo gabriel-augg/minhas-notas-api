@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt"
+import createToken from "../helpers/create-token.js";
 
 export default class AuthController{
     static async signUp(req, res){
@@ -36,7 +37,7 @@ export default class AuthController{
 
         try {
             const createdUser = await User.create(user)
-            res.status(201).json({user: createdUser})
+            await createToken(createdUser, req, res)
         } catch (error) {
             console.log(error)
             res.status(500).json({message: "Ocorreu um erro no servidor!"})
