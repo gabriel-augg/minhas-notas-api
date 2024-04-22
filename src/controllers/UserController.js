@@ -12,7 +12,9 @@ export default class UserController {
 
             res.status(200).json({user: currentUser})
         } catch (error) {
-            res.status(500).json({ message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" })
+            res.status(500).json({ 
+                message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" 
+            })
         }
     }
 

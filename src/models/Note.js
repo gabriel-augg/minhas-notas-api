@@ -10,15 +10,11 @@ const Note = db.define("Note", {
         allowNull: false
     },
 
-    description: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
+    description: DataTypes.STRING,
+    category: DataTypes.STRING
 })
 
 Note.belongsTo(User)
-Note.belongsTo(Category)
 User.hasMany(Note)
-Category.hasMany(Note)
 
 export default Note;
