@@ -6,7 +6,7 @@ import bcrypt from "bcrypt"
 
 
 export default class UserController {
-    
+
     static async updateUser(req, res){
         const {name, email, password, confirmpassword} = req.body
 
@@ -48,11 +48,28 @@ export default class UserController {
             res.status(200).json({
                 user: currentUser
             })
-            
+
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" })
         }
 
     }
+
+    static async deleteUser(req, res){
+        try {
+            const token = getToken(req)
+            const user = await getUserByToken(token)
+
+            await User.destroy({where: {id:user.id}})
+
+            res.status(204).json({})
+
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde"})
+        }
+    }
+
+    
 }
