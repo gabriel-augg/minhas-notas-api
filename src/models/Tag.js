@@ -3,7 +3,7 @@ import { DataTypes } from "sequelize";
 
 import User from "./User.js";
 
-const Category = db.define("Category", {
+const Tag = db.define("Tag", {
     title: {
         type: DataTypes.STRING(30)
     }

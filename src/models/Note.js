@@ -4,13 +4,13 @@ import { DataTypes } from "sequelize";
 import User from "./User.js";
 
 const Note = db.define("Note", {
-    title: {
-        type: DataTypes.STRING(30),
-        allowNull: false
-    },
-
+    title: DataTypes.STRING,
     description: DataTypes.STRING,
-    category: DataTypes.STRING
+    tag: DataTypes.STRING,
+    pinned: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    }
 })
 
 Note.belongsTo(User)
