@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import ERROR from "../helpers/errors.js";
 import bcrypt from "bcrypt"
 import createToken from "../helpers/create-token.js";
 
@@ -9,7 +10,7 @@ export default class AuthController{
 
         if( !email || !password ){
             return res.status(400).json({
-                message: "Ocorreu um erro inesperado!"
+                message: ERROR.INTERNAL_SERVER_ERROR
             })
         }
 
@@ -33,7 +34,7 @@ export default class AuthController{
             await createToken(user, req, res)
         } catch (error) {
             console.log(error)
-            res.status(500).json({message: "Ocorreu um erro no servidor!"})
+            res.status(500).json({message: ERROR.INTERNAL_SERVER_ERROR})
         }
     }
 
@@ -42,7 +43,7 @@ export default class AuthController{
 
         if(!username || !email || !password || !confirmpassword){
             return res.status(400).json({
-                message: "Ocorreu um erro inesperado!"
+                message: ERROR.INTERNAL_SERVER_ERROR
             })
         }
 
@@ -74,7 +75,7 @@ export default class AuthController{
             await createToken(createdUser, req, res)
         } catch (error) {
             console.log(error)
-            res.status(500).json({message: "Ocorreu um erro no servidor!"})
+            res.status(500).json({message: ERROR.INTERNAL_SERVER_ERROR})
         }
 
     }

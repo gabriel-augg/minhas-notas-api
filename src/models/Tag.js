@@ -15,7 +15,7 @@ const Tag = db.define("Tag", {
     }
 })
 
-Category.belongsTo(User)
-User.hasMany(Category)
+Tag.belongsTo(User)
+User.hasMany(Tag)
 
-export default Category;
+export default Tag;

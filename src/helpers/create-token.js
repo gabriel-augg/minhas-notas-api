@@ -8,4 +8,4 @@ const createToken = async (user, req, res) => {
     res.status(200).json({token})
 }
 
-export default createToken;
+export default createToken; 

@@ -1,5 +1,6 @@
 import getToken from "../helpers/get-token.js";
 import getUserByToken from "../helpers/get-user-by-token.js";
+import ERROR from "../helpers/errors.js";
 import Note from "../models/Note.js";
 
 export default class NoteController {
@@ -44,7 +45,7 @@ export default class NoteController {
 
         } catch (error) {
             res.status(500).json({ 
-                message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" 
+                message: ERROR.INTERNAL_SERVER_ERROR
             })
         }
     }
@@ -56,7 +57,9 @@ export default class NoteController {
         try {
             const note = await Note.findByPk(id);
             if(!note){
-                res.status(404).json({
+                res
+                    .status(404)
+                    .json({
                     message: "A nota não foi encontrada"
                 });
             } 
@@ -72,7 +75,7 @@ export default class NoteController {
             res.status(200).json({note})
         } catch (error) {
             res.status(500).json({ 
-                message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" 
+                message: ERROR.FAILED_REQUEST
             });
         }
     }
@@ -96,7 +99,7 @@ export default class NoteController {
             });
         } catch (error) {
             res.status(500).json({ 
-                message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" 
+                message: ERROR.INTERNAL_SERVER_ERROR
             });
         }
     }

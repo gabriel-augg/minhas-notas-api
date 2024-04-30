@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import ERROR from "../helpers/errors.js";
 import getToken from "../helpers/get-token.js";
 import getUserByToken from "../helpers/get-user-by-token.js";
 
@@ -13,7 +14,7 @@ export default class UserController {
             res.status(200).json({user: currentUser})
         } catch (error) {
             res.status(500).json({ 
-                message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" 
+                message: ERROR.INTERNAL_SERVER_ERROR 
             })
         }
     }
@@ -23,7 +24,7 @@ export default class UserController {
 
         if(!name || !email){
             return res.status(400).json({
-                message: "Ocorreu um erro inesperado!"
+                message: ERROR.INTERNAL_SERVER_ERROR
             })
         }
 
@@ -62,7 +63,7 @@ export default class UserController {
 
         } catch (error) {
             console.log(error)
-            res.status(500).json({ message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde" })
+            res.status(500).json({ message: ERROR.INTERNAL_SERVER_ERROR })
         }
 
     }
@@ -78,7 +79,7 @@ export default class UserController {
 
         } catch (error) {
             console.log(error)
-            res.status(500).json({message: "Ocorreu um erro inesperado com o servidor, por favor, tente novamente mais tarde"})
+            res.status(500).json({message: ERROR.INTERNAL_SERVER_ERROR})
         }
     }
 
