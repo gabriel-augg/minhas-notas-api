@@ -21,6 +21,8 @@ export default class NoteController {
 
             const note = await Note.create(noteData)
 
+            console.log(note)
+
             res.status(201).json({note})
         } catch (error) {
             res.status(500).json({

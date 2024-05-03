@@ -20,9 +20,10 @@ export default class UserController {
     }
 
     static async updateUser(req, res){
-        const {name, email, password, confirmpassword} = req.body
+        const {username, email, password, confirmpassword} = req.body
 
-        if(!name || !email){
+
+        if(!username || !email){
             return res.status(400).json({
                 message: ERROR.INTERNAL_SERVER_ERROR
             })
@@ -39,7 +40,7 @@ export default class UserController {
             })
         }
 
-        currentUser.name = name
+        currentUser.username = username
         currentUser.email = email
 
         if(password){
