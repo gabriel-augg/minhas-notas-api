@@ -10,6 +10,7 @@ export default class AuthController {
         if (!email || !password) {
             return res.status(400).json({
                 message: ERROR.FAILED_REQUEST,
+                error: ERROR.REQUIRED_FIELDS
             });
         }
 
@@ -45,6 +46,7 @@ export default class AuthController {
         if (!username || !email || !password || !confirmpassword) {
             return res.status(400).json({
                 message: ERROR.FAILED_REQUEST,
+                error: ERROR.REQUIRED_FIELDS,
             });
         }
 

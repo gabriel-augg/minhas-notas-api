@@ -32,6 +32,7 @@ export default class UserController {
         if (!username || !email) {
             return res.status(400).json({
                 message: ERROR.FAILED_REQUEST,
+                error: ERROR.REQUIRED_FIELDS,
             });
         }
 

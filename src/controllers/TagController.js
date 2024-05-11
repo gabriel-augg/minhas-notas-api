@@ -10,6 +10,7 @@ export default class TagControllers {
         if (!name) {
             return res.status(400).json({
                 message: ERROR.FAILED_REQUEST,
+                error: ERROR.REQUIRED_FIELDS,
             });
         }
 
@@ -78,6 +79,7 @@ export default class TagControllers {
         if (!name) {
             return res.status(400).json({
                 message: ERROR.FAILED_REQUEST,
+                error: ERROR.REQUIRED_FIELDS,
             });
         }
 
@@ -86,6 +88,7 @@ export default class TagControllers {
             if (!tag) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.TAG_NOT_FOUND,
                 });
             }
 
@@ -111,6 +114,7 @@ export default class TagControllers {
             if (!tag) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.TAG_NOT_FOUND,
                 });
             }
 

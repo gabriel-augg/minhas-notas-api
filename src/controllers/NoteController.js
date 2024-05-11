@@ -83,6 +83,7 @@ export default class NoteController {
             if (!note) {
                 res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.NOTE_NOT_FOUND,
                 });
             }
 
@@ -109,6 +110,7 @@ export default class NoteController {
             if (!note) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.NOTE_NOT_FOUND,
                 });
             }
 
