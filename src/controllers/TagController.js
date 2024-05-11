@@ -39,14 +39,14 @@ export default class TagControllers {
 
             const user = await getUserByToken(token);
 
-            const tag = await Tag.findAll({
+            const tags = await Tag.findAll({
                 where: {
                     UserId: user.id,
                 },
             });
 
             res.status(200).json({
-                tag
+                tags,
             });
         } catch (error) {
             res.status(400).json({
