@@ -1,5 +1,5 @@
 import getToken from "../helpers/get-token.js";
-import getUserByToken from "../helpers/get-user-by-token.js";
+import getLoggedUserByToken from "../helpers/get-logged-user-by-token.js";
 import ERROR from "../helpers/errors.js";
 import Note from "../models/Note.js";
 
@@ -9,7 +9,7 @@ export default class NoteController {
 
         try {
             const token = getToken(req);
-            const user = await getUserByToken(token);
+            const user = await getLoggedUserByToken(token);
 
             if (!user) {
                 return res.status(400).json({
@@ -40,7 +40,7 @@ export default class NoteController {
     static async getNotes(req, res) {
         try {
             const token = getToken(req);
-            const user = await getUserByToken(token);
+            const user = await getLoggedUserByToken(token);
 
             if (!user) {
                 return res.status(400).json({

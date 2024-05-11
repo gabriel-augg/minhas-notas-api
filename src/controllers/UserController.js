@@ -1,14 +1,14 @@
 import User from "../models/User.js";
 import ERROR from "../helpers/errors.js";
 import getToken from "../helpers/get-token.js";
-import getUserByToken from "../helpers/get-user-by-token.js";
+import getLoggedUserByToken from "../helpers/get-logged-user-by-token.js";
 
 import bcrypt from "bcrypt";
 export default class UserController {
     static async checkUser(req, res) {
         try {
             const token = getToken(req);
-            const user = await getUserByToken(token);
+            const user = await getLoggedUserByToken(token);
 
             if (!user) {
                 return res.status(400).json({
@@ -37,7 +37,7 @@ export default class UserController {
         }
 
         const token = getToken(req);
-        const user = await getUserByToken(token);
+        const user = await getLoggedUserByToken(token);
 
         if (!user) {
             return res.status(400).json({
@@ -94,7 +94,7 @@ export default class UserController {
     static async delete(req, res) {
         try {
             const token = getToken(req);
-            const user = await getUserByToken(token);
+            const user = await getLoggedUserByToken(token);
 
             if (!user) {
                 return res.status(400).json({

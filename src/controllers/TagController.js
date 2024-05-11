@@ -1,5 +1,5 @@
 import getToken from "../helpers/get-token.js";
-import getUserByToken from "../helpers/get-user-by-token.js";
+import getLoggedUserByToken from "../helpers/get-logged-user-by-token.js";
 import Tag from "../models/Tag.js";
 import ERROR from "../helpers/errors.js";
 
@@ -17,7 +17,7 @@ export default class TagControllers {
         try {
             const token = getToken(req);
 
-            const user = await getUserByToken(token);
+            const user = await getLoggedUserByToken(token);
 
             if (!user) {
                 return res.status(400).json({
@@ -46,7 +46,7 @@ export default class TagControllers {
         try {
             const token = getToken(req);
 
-            const user = await getUserByToken(token);
+            const user = await getLoggedUserByToken(token);
 
             if (!user) {
                 return res.status(400).json({
