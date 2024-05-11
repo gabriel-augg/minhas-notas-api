@@ -3,86 +3,85 @@ import ERROR from "../helpers/errors.js";
 import getToken from "../helpers/get-token.js";
 import getUserByToken from "../helpers/get-user-by-token.js";
 
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 export default class UserController {
-
-    static async checkUser(req, res){
+    static async checkUser(req, res) {
         try {
-            const token = getToken(req)
-            const currentUser = await getUserByToken(token)
+            const token = getToken(req);
+            const currentUser = await getUserByToken(token);
 
-            res.status(200).json({user: currentUser})
+            res.status(200).json({ user: currentUser });
         } catch (error) {
-            res.status(500).json({ 
-                message: ERROR.INTERNAL_SERVER_ERROR 
-            })
+            res.status(500).json({
+                message: ERROR.INTERNAL_SERVER_ERROR,
+            });
         }
     }
 
-    static async updateUser(req, res){
-        const {username, email, password, confirmpassword} = req.body
+    static async update(req, res) {
+        const { username, email, password, confirmpassword } = req.body;
 
-
-        if(!username || !email){
+        if (!username || !email) {
             return res.status(400).json({
-                message: ERROR.INTERNAL_SERVER_ERROR
-            })
+                message: ERROR.FAILED_REQUEST,
+            });
         }
 
-        const token = getToken(req)
-        const currentUser = await getUserByToken(token)
+        const token = getToken(req);
+        const currentUser = await getUserByToken(token);
 
-        const checkIfEmailIsAvailable = await User.findOne({where: {email: email}})
+        const checkIfEmailIsAvailable = await User.findOne({
+            where: { email: email },
+        });
 
-        if(checkIfEmailIsAvailable && currentUser.email !== email ){
+        if (checkIfEmailIsAvailable && currentUser.email !== email) {
             return res.status(409).json({
-                message: "Email indisponível!"
-            })
+                message: "Email indisponível!",
+            });
         }
 
-        currentUser.username = username
-        currentUser.email = email
+        currentUser.username = username;
+        currentUser.email = email;
 
-        if(password){
-            if(password !== confirmpassword){
+        if (password) {
+            if (password !== confirmpassword) {
                 return res.status(400).json({
-                    message: "As senhas não conhecidem!"
-                })
+                    message: "As senhas não conhecidem!",
+                });
             }
 
-            const salt = await bcrypt.genSalt(10)
-            const hashPassword = await bcrypt.hash(password, salt)
+            const salt = await bcrypt.genSalt(10);
+            const hashPassword = await bcrypt.hash(password, salt);
 
-            currentUser.password = hashPassword
+            currentUser.password = hashPassword;
         }
 
         try {
-            await currentUser.save()
+            await currentUser.save();
             res.status(200).json({
-                user: currentUser
-            })
-
+                user: currentUser,
+            });
         } catch (error) {
-            console.log(error)
-            res.status(500).json({ message: ERROR.INTERNAL_SERVER_ERROR })
+            res.status(500).json({
+                message: ERROR.INTERNAL_SERVER_ERROR,
+                error: error.message,
+            });
         }
-
     }
 
-    static async deleteUser(req, res){
+    static async delete(req, res) {
         try {
-            const token = getToken(req)
-            const user = await getUserByToken(token)
+            const token = getToken(req);
+            const user = await getUserByToken(token);
 
-            await User.destroy({where: {id:user.id}})
+            await User.destroy({ where: { id: user.id } });
 
-            res.status(204).json({})
-
+            res.status(204).json({});
         } catch (error) {
-            console.log(error)
-            res.status(500).json({message: ERROR.INTERNAL_SERVER_ERROR})
+            res.status(500).json({
+                message: ERROR.INTERNAL_SERVER_ERROR,
+                error: error.message,
+            });
         }
     }
-
-    
 }

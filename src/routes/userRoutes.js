@@ -4,8 +4,8 @@ import verifyToken from "../helpers/verify-token.js";
 
 const userRoutes = Router()
 
-userRoutes.get("/check-user", verifyToken, UserController.checkUser)
-userRoutes.put("/update-user", verifyToken, UserController.updateUser)
-userRoutes.delete("/delete-user", verifyToken, UserController.deleteUser)
+userRoutes.get("/checkuser", verifyToken, UserController.checkUser)
+userRoutes.put("/update", verifyToken, UserController.update)
+userRoutes.delete("/delete", verifyToken, UserController.delete)
 
 export default userRoutes;

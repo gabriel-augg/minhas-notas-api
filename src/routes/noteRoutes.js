@@ -5,9 +5,9 @@ import verifyToken from "../helpers/verify-token.js";
 
 const noteRoutes = Router();
 
-noteRoutes.post("/create", verifyToken, NoteController.create)
-noteRoutes.get("/get-notes", verifyToken, NoteController.getAllUserNotes)
-noteRoutes.put("/update/:id", verifyToken, NoteController.update)
-noteRoutes.delete("/delete/:id", verifyToken, NoteController.delete)
+noteRoutes.get("/", verifyToken, NoteController.getNotes);
+noteRoutes.post("/create", verifyToken, NoteController.create);
+noteRoutes.put("/:id/update", verifyToken, NoteController.update);
+noteRoutes.delete("/:id/delete", verifyToken, NoteController.delete);
 
 export default noteRoutes;

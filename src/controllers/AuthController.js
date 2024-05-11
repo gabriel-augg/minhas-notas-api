@@ -1,64 +1,67 @@
 import User from "../models/User.js";
 import ERROR from "../helpers/errors.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 import createToken from "../helpers/create-token.js";
 
-export default class AuthController{
+export default class AuthController {
+    static async signIn(req, res) {
+        const { email, password } = req.body;
 
-    static async signIn(req, res){
-        const { email, password } = req.body
-
-        if( !email || !password ){
+        if (!email || !password) {
             return res.status(400).json({
-                message: ERROR.INTERNAL_SERVER_ERROR
-            })
+                message: ERROR.FAILED_REQUEST,
+            });
         }
 
-        const user = await User.findOne({where: {email: email}})
+        const user = await User.findOne({ where: { email: email } });
 
-        if(!user){
+        if (!user) {
             return res.status(401).json({
-                message: "Senha ou email incorreto!"
-            })
+                message: "Senha ou email incorreto!",
+            });
         }
 
-        const checkPassword = await bcrypt.compare(password, user.password)
+        const checkPassword = await bcrypt.compare(password, user.password);
 
-        if(!checkPassword){
+        if (!checkPassword) {
             return res.status(401).json({
-                message: "Senha ou email incorreto!"
-            })
+                message: "Senha ou email incorreto!",
+            });
         }
 
         try {
-            await createToken(user, req, res)
+            await createToken(user, req, res);
         } catch (error) {
-            console.log(error)
-            res.status(500).json({message: ERROR.INTERNAL_SERVER_ERROR})
+            res.status(500).json({
+                message: ERROR.INTERNAL_SERVER_ERROR,
+                error: error.message,
+            });
         }
     }
 
-    static async signUp(req, res){
-        const { username, email, password, confirmpassword } = req.body
+    static async signUp(req, res) {
+        const { username, email, password, confirmpassword } = req.body;
 
-        if(!username || !email || !password || !confirmpassword){
+        if (!username || !email || !password || !confirmpassword) {
             return res.status(400).json({
-                message: ERROR.INTERNAL_SERVER_ERROR
-            })
+                message: ERROR.FAILED_REQUEST,
+            });
         }
 
-        const checkIfUserExists = await User.findOne({where: {email: email}})
+        const checkIfUserExists = await User.findOne({
+            where: { email: email },
+        });
 
-        if(checkIfUserExists){
+        if (checkIfUserExists) {
             return res.status(409).json({
-                message: "O email já está em uso!"
-            })
+                message: "O email já está em uso!",
+            });
         }
 
-        if(password !== confirmpassword){
+        if (password !== confirmpassword) {
             return res.status(400).json({
-                message: "As senhas não conhecidem"
-            })
+                message: "As senhas não conhecidem!",
+            });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -67,17 +70,19 @@ export default class AuthController{
         const user = {
             username,
             email,
-            password: hashPassword
-        }
+            password: hashPassword,
+        };
 
         try {
-            const createdUser = await User.create(user)
-            await createToken(createdUser, req, res)
+            const createdUser = await User.create(user);
+
+            await createToken(createdUser, req, res);
+
         } catch (error) {
-            console.log(error)
-            res.status(500).json({message: ERROR.INTERNAL_SERVER_ERROR})
+            res.status(500).json({
+                message: ERROR.INTERNAL_SERVER_ERROR,
+                error: error.message,
+            });
         }
-
     }
-
 }
