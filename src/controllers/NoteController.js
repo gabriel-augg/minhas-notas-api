@@ -67,7 +67,7 @@ export default class NoteController {
             const note = await Note.findByPk(id);
 
             if (!note) {
-                res.status(404).json({
+                res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
                 });
             }

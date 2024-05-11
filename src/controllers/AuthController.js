@@ -77,7 +77,6 @@ export default class AuthController {
             const createdUser = await User.create(user);
 
             await createToken(createdUser, req, res);
-
         } catch (error) {
             res.status(500).json({
                 message: ERROR.INTERNAL_SERVER_ERROR,

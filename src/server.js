@@ -19,7 +19,6 @@ app.use("/users", userRoutes);
 app.use("/notes", noteRoutes);
 app.use("/tags", tagRoutes);
 
-connectToDataBase()
-.then(()=> {
-    app.listen(port)
+connectToDataBase().then(() => {
+    app.listen(port);
 });

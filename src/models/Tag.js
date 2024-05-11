@@ -8,14 +8,14 @@ const Tag = db.define("Tag", {
         type: DataTypes.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
     },
     name: {
-        type: DataTypes.STRING(30)
-    }
-})
+        type: DataTypes.STRING(30),
+    },
+});
 
-Tag.belongsTo(User)
-User.hasMany(Tag)
+Tag.belongsTo(User);
+User.hasMany(Tag);
 
 export default Tag;

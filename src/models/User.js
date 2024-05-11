@@ -6,21 +6,21 @@ const User = db.define("User", {
         type: DataTypes.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
     },
     username: {
         type: DataTypes.STRING(20),
-        allowNull: false
+        allowNull: false,
     },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
-    }
-})
+        allowNull: false,
+    },
+});
 
 export default User;

@@ -8,18 +8,18 @@ const Note = db.define("Note", {
         type: DataTypes.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
     },
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     tag: DataTypes.STRING,
     pinned: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
-    }
-})
+        defaultValue: false,
+    },
+});
 
-Note.belongsTo(User)
-User.hasMany(Note)
+Note.belongsTo(User);
+User.hasMany(Note);
 
 export default Note;
