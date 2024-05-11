@@ -17,7 +17,7 @@ Clique [aqui](https://github.com/gabriel-augg/minhas-notas) para mais informaç�
 - Bcrypt
 - CORS
 
-- ## 🚀 Getting started
+## 🚀 Getting started
 
 Para rodar esta API localmente, é necessério fazer clone do projeto, instalar todas as suas dependências, configurar variáveis de ambiente e configurar o banco de dados localmente.
 
