@@ -10,7 +10,7 @@ const Tag = db.define("Tag", {
         primaryKey: true,
         allowNull: false
     },
-    title: {
+    name: {
         type: DataTypes.STRING(30)
     }
 })
