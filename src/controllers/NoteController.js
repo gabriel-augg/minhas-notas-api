@@ -14,6 +14,7 @@ export default class NoteController {
             if (!user) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.LOGGED_USER_NOT_FOUND,
                 });
             }
 
@@ -44,6 +45,7 @@ export default class NoteController {
             if (!user) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.LOGGED_USER_NOT_FOUND,
                 });
             }
 

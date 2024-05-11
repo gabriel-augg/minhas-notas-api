@@ -13,6 +13,7 @@ export default class UserController {
             if (!user) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.LOGGED_USER_NOT_FOUND,
                 });
             }
 
@@ -20,6 +21,7 @@ export default class UserController {
         } catch (error) {
             res.status(500).json({
                 message: ERROR.INTERNAL_SERVER_ERROR,
+                error: error.message,
             });
         }
     }
@@ -39,6 +41,7 @@ export default class UserController {
         if (!user) {
             return res.status(400).json({
                 message: ERROR.FAILED_REQUEST,
+                error: ERROR.LOGGED_USER_NOT_FOUND,
             });
         }
 
@@ -95,6 +98,7 @@ export default class UserController {
             if (!user) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.LOGGED_USER_NOT_FOUND,
                 });
             }
 

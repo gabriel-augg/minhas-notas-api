@@ -21,6 +21,7 @@ export default class TagControllers {
             if (!user) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.LOGGED_USER_NOT_FOUND,
                 });
             }
 
@@ -49,6 +50,7 @@ export default class TagControllers {
             if (!user) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
+                    error: ERROR.LOGGED_USER_NOT_FOUND,
                 });
             }
 
