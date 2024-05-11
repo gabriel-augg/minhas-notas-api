@@ -61,7 +61,7 @@ export default class TagControllers {
         const { name } = req.body;
 
         if (!name) {
-            res.status(400).json({
+            return res.status(400).json({
                 message: ERROR.FAILED_REQUEST,
             });
         }
@@ -69,7 +69,7 @@ export default class TagControllers {
         try {
             const tag = await Tag.findByPk(id);
             if (!tag) {
-                res.status(404).json({
+                return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
                 });
             }
@@ -94,7 +94,7 @@ export default class TagControllers {
             const tag = await Tag.findByPk(id);
 
             if (!tag) {
-                res.status(400).json({
+                return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
                 });
             }
