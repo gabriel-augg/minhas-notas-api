@@ -11,6 +11,12 @@ export default class NoteController {
             const token = getToken(req);
             const user = await getUserByToken(token);
 
+            if (!user) {
+                return res.status(400).json({
+                    message: ERROR.FAILED_REQUEST,
+                });
+            }
+
             const noteData = {
                 title,
                 description,
@@ -34,6 +40,12 @@ export default class NoteController {
         try {
             const token = getToken(req);
             const user = await getUserByToken(token);
+
+            if (!user) {
+                return res.status(400).json({
+                    message: ERROR.FAILED_REQUEST,
+                });
+            }
 
             const notes = await Note.findAll({
                 where: {

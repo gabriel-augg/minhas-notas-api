@@ -8,9 +8,15 @@ export default class UserController {
     static async checkUser(req, res) {
         try {
             const token = getToken(req);
-            const currentUser = await getUserByToken(token);
+            const user = await getUserByToken(token);
 
-            res.status(200).json({ user: currentUser });
+            if (!user) {
+                return res.status(400).json({
+                    message: ERROR.FAILED_REQUEST,
+                });
+            }
+
+            res.status(200).json({ user });
         } catch (error) {
             res.status(500).json({
                 message: ERROR.INTERNAL_SERVER_ERROR,
@@ -28,20 +34,32 @@ export default class UserController {
         }
 
         const token = getToken(req);
-        const currentUser = await getUserByToken(token);
+        const user = await getUserByToken(token);
+
+        if (!user) {
+            return res.status(400).json({
+                message: ERROR.FAILED_REQUEST,
+            });
+        }
+
+        if (!user) {
+            return res.status(400).json({
+                message: ERROR.FAILED_REQUEST,
+            });
+        }
 
         const checkIfEmailIsAvailable = await User.findOne({
             where: { email: email },
         });
 
-        if (checkIfEmailIsAvailable && currentUser.email !== email) {
+        if (checkIfEmailIsAvailable && user.email !== email) {
             return res.status(409).json({
                 message: "Email indisponível!",
             });
         }
 
-        currentUser.username = username;
-        currentUser.email = email;
+        user.username = username;
+        user.email = email;
 
         if (password) {
             if (password !== confirmpassword) {
@@ -53,13 +71,13 @@ export default class UserController {
             const salt = await bcrypt.genSalt(10);
             const hashPassword = await bcrypt.hash(password, salt);
 
-            currentUser.password = hashPassword;
+            user.password = hashPassword;
         }
 
         try {
-            await currentUser.save();
+            await user.save();
             res.status(200).json({
-                user: currentUser,
+                user,
             });
         } catch (error) {
             res.status(500).json({
@@ -73,6 +91,12 @@ export default class UserController {
         try {
             const token = getToken(req);
             const user = await getUserByToken(token);
+
+            if (!user) {
+                return res.status(400).json({
+                    message: ERROR.FAILED_REQUEST,
+                });
+            }
 
             await User.destroy({ where: { id: user.id } });
 

@@ -17,6 +17,13 @@ export default class TagControllers {
             const token = getToken(req);
 
             const user = await getUserByToken(token);
+
+            if (!user) {
+                return res.status(400).json({
+                    message: ERROR.FAILED_REQUEST,
+                });
+            }
+
             const tag = await Tag.create({
                 name,
                 UserId: user.id,
@@ -38,6 +45,12 @@ export default class TagControllers {
             const token = getToken(req);
 
             const user = await getUserByToken(token);
+
+            if (!user) {
+                return res.status(400).json({
+                    message: ERROR.FAILED_REQUEST,
+                });
+            }
 
             const tags = await Tag.findAll({
                 where: {
