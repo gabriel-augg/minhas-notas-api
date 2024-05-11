@@ -13,4 +13,4 @@ const getLoggedUserByToken = async (token) => {
     return user;
 };
 
-export default getUserByToken;
+export default getLoggedUserByToken;
