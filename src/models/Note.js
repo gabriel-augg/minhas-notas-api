@@ -1,12 +1,11 @@
 import { sequelize as db } from "../db/conn.js";
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes } from "sequelize";
 
 import User from "./User.js";
 
 const Note = db.define("Note", {
     id: {
         type: DataTypes.UUID,
-        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         allowNull: false,
     },

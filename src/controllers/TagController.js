@@ -5,9 +5,9 @@ import ERROR from "../helpers/errors.js";
 
 export default class TagControllers {
     static async create(req, res) {
-        const { name } = req.body;
+        const { id, name } = req.body;
 
-        if (!name) {
+        if (!id || !name) {
             return res.status(400).json({
                 message: ERROR.FAILED_REQUEST,
                 error: ERROR.REQUIRED_FIELDS,
@@ -27,6 +27,7 @@ export default class TagControllers {
             }
 
             const tag = await Tag.create({
+                id,
                 name,
                 UserId: user.id,
             });

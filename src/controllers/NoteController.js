@@ -5,7 +5,14 @@ import Note from "../models/Note.js";
 
 export default class NoteController {
     static async create(req, res) {
-        const { title, description, tag, pinned } = req.body;
+        const { id, title, description, tag, pinned } = req.body;
+
+        if (!id) {
+            return res.status(400).json({
+                message: ERROR.FAILED_REQUEST,
+                error: ERROR.REQUIRED_FIELDS,
+            });
+        }
 
         try {
             const token = getToken(req);
@@ -19,6 +26,7 @@ export default class NoteController {
             }
 
             const noteData = {
+                id,
                 title,
                 description,
                 tag,
