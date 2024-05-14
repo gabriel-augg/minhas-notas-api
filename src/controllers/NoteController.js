@@ -79,10 +79,10 @@ export default class NoteController {
     static async update(req, res) {
         const { id } = req.params;
         const {
-            title = null,
-            description = null,
-            tag = null,
-            pinned = null,
+            title = "",
+            description = "",
+            tag = "",
+            pinned = "",
         } = req.body;
 
         try {
