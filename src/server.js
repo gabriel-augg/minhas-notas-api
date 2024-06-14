@@ -7,7 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import noteRoutes from "./routes/noteRoutes.js";
 import tagRoutes from "./routes/tagRoutes.js";
 
-const port = 3000;
+const port = 3645;
 const app = express();
 
 app.use(cors());
