@@ -1,6 +1,5 @@
 import { sequelize as db } from "../db/conn.js";
 import { DataTypes } from "sequelize";
-
 import User from "./User.js";
 
 const Tag = db.define("Tag", {
@@ -19,3 +18,4 @@ Tag.belongsTo(User);
 User.hasMany(Tag);
 
 export default Tag;
+
