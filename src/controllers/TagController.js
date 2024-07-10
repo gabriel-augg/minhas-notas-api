@@ -1,13 +1,13 @@
-import getToken from "../helpers/get-token.js";
-import getLoggedUserByToken from "../helpers/get-logged-user-by-token.js";
 import Tag from "../models/Tag.js";
 import ERROR from "../helpers/errors.js";
+import getToken from "../helpers/get-token.js";
+import getLoggedUserByToken from "../helpers/get-logged-user-by-token.js";
 
-export default class TagControllers {
+export default class TagController {
     static async create(req, res) {
-        const { id, name } = req.body;
+        const { name } = req.body;
 
-        if (!id || !name) {
+        if (!name) {
             return res.status(400).json({
                 message: ERROR.FAILED_REQUEST,
                 error: ERROR.REQUIRED_FIELDS,
@@ -25,7 +25,7 @@ export default class TagControllers {
                 });
             }
 
-            const tag = await Tag.create({ id, name, UserId: user.id });
+            const tag = await Tag.create({ name, UserId: user.id });
             res.status(201).json({ tag });
         } catch (error) {
             res.status(500).json({
@@ -69,7 +69,18 @@ export default class TagControllers {
         }
 
         try {
-            const tag = await Tag.findByPk(id);
+            const token = getToken(req);
+            const user = await getLoggedUserByToken(token);
+
+            if (!user) {
+                return res.status(400).json({
+                    message: ERROR.FAILED_REQUEST,
+                    error: ERROR.LOGGED_USER_NOT_FOUND,
+                });
+            }
+
+            const tag = await Tag.findOne({ where: { id, UserId: user.id } });
+
             if (!tag) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
@@ -92,7 +103,18 @@ export default class TagControllers {
         const { id } = req.params;
 
         try {
-            const tag = await Tag.findByPk(id);
+            const token = getToken(req);
+            const user = await getLoggedUserByToken(token);
+
+            if (!user) {
+                return res.status(400).json({
+                    message: ERROR.FAILED_REQUEST,
+                    error: ERROR.LOGGED_USER_NOT_FOUND,
+                });
+            }
+
+            const tag = await Tag.findOne({ where: { id, UserId: user.id } });
+
             if (!tag) {
                 return res.status(400).json({
                     message: ERROR.FAILED_REQUEST,
@@ -110,4 +132,5 @@ export default class TagControllers {
         }
     }
 }
+
 

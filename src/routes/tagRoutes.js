@@ -1,12 +1,13 @@
-import Routes from "express";
+import { Router } from "express";
 import verifyToken from "../helpers/verify-token.js";
-import TagControllers from "../controllers/TagController.js";
+import TagController from "../controllers/TagController.js";
 
-const tagRoutes = Routes();
+const tagRoutes = Router();
 
-tagRoutes.get("/", verifyToken, TagControllers.getTags);
-tagRoutes.post("/create", verifyToken, TagControllers.create);
-tagRoutes.patch("/:id/update", verifyToken, TagControllers.update);
-tagRoutes.delete("/:id/delete", verifyToken, TagControllers.delete);
+tagRoutes.get("/", verifyToken, TagController.getTags);
+tagRoutes.post("/create", verifyToken, TagController.create);
+tagRoutes.patch("/:id/update", verifyToken, TagController.update);
+tagRoutes.delete("/:id/delete", verifyToken, TagController.delete);
 
 export default tagRoutes;
+
